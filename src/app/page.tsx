@@ -7,6 +7,7 @@ import Recorder, { mimeType } from "@/components/Recorder";
 import { useEffect, useRef, useState } from "react";
 import transcript from "../../actions/transcript";
 import { useFormState } from "react-dom";
+import VoiceSynthesizer from "@/components/VoiceSynthesizer";
 
 const initialState = {
   sender: "",
@@ -25,6 +26,7 @@ export default function Home() {
   const submitButtonRef = useRef<HTMLButtonElement | null>(null)
   const [state, formAction] = useFormState(transcript, initialState);
   const [messages, setMessages] = useState<Message[]>([])
+  const [displaySettings, setDisplaySettings] = useState(false)
 
   useEffect(() => {
 
@@ -73,6 +75,7 @@ export default function Home() {
         <SettingsIcon
           size={40}
           className="p-2 m-2 rounded-full cursor-pointer bg-purple-600 text-black transition-all ease-in-out duration-150 hover:bg-purple-700 hover:text-white"
+          onClick={() => setDisplaySettings(!displaySettings)}
         />
       </header>
 
@@ -90,7 +93,10 @@ export default function Home() {
           <Recorder uploadAudio={uploadAudio} />
 
           <div>
-            {/* Voice Synthesiser - output of the assistance voice */}
+            <VoiceSynthesizer
+              state={state}
+              displaySettings={displaySettings}
+            />
           </div>
         </div>
 
