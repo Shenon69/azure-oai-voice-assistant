@@ -35,7 +35,7 @@ export default function Home() {
           response: state.response || "",
           id: state.id || ""
         },
-        ...messages
+        ...messages.reverse()
       ])
     }
 
